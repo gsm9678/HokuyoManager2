@@ -1,0 +1,23 @@
+{
+    "Zoom_InOut_Value": 8.714284896850586,
+    "X_Position_Value": 239.0,
+    "Y_Position_Value": -74.28572082519531,
+    "Rotate_Camera_Value": -3.5,
+    "X_Size_Value": 456.4286193847656,
+    "Y_Size_Value": 541.0714111328125,
+    "Point_Scale_Value": 20.0,
+    "Max_Scale_Value": 67.47142028808594,
+    "Min_Scale_Value": 21.507143020629884,
+    "IP_Adress": "192.168.0.38",
+    "OSC_IP_Adress": "127.0.0.1",
+    "OSC_Adress": "Down",
+    "BoxData": [
+        {
+            "Name": "Box0",
+            "X_Position_Value": 194.2857208251953,
+            "Y_Position_Value": 0.0,
+            "X_Size_Value": 82.29286193847656,
+            "Y_Size_Value": 56.621429443359378
+        }
+    ]
+}
