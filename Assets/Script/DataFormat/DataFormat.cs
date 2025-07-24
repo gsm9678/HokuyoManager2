@@ -20,6 +20,27 @@ public class DataFormat
     public string OSC_Adress;
 
     public List<BoxData> BoxData = new List<BoxData>();
+
+    public List<HokuyoSetup> hokuyoSetups = new List<HokuyoSetup>();
+}
+
+[Serializable]
+public class HokuyoSetup
+{
+    public string Hokuyo_IP_Adress;
+    public float Zoom_IN_OUT;
+    public float X_Position;
+    public float Y_Position;
+    public float Rotate_Camera_Value;
+
+    public HokuyoSetup()
+    {
+        Hokuyo_IP_Adress = "192.168.0.10";
+        Zoom_IN_OUT = 1;
+        X_Position = 0;
+        Y_Position = 0;
+        Rotate_Camera_Value = 0;
+    }
 }
 
 [Serializable]
@@ -73,4 +94,11 @@ public class DetectedObjectData
     {
         return new Vector3(Mathf.Abs(Right) - Mathf.Abs(Left), Mathf.Abs(Top) - Mathf.Abs(Bottom), 0);
     }
+}
+
+public class PointTrackingData
+{
+    public Vector3 position;
+    public float PauseTime;
+    public bool state = false;
 }

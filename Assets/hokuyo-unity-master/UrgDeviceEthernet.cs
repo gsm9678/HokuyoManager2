@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net.Sockets;
 using SCIP_library;
+using Unity.VisualScripting;
+using UnityEditor;
 
 public class UrgDeviceEthernet : UrgDevice
 {
@@ -68,12 +70,11 @@ public class UrgDeviceEthernet : UrgDevice
         }
     }
 
-    
-
     void OnDisable()
     {
         DeInit();
     }
+
     void OnApplicationQuit()
     {
         DeInit();
@@ -113,8 +114,15 @@ public class UrgDeviceEthernet : UrgDevice
 
     public void Write(string scip)
     {
-        NetworkStream stream = tcpClient.GetStream();
-        write(stream, scip);
+        try
+        {
+            NetworkStream stream = tcpClient.GetStream();
+            write(stream, scip);
+        }
+        catch
+        {
+            //EditorUtility.DisplayDialog("오류", "잘못된 IP Adress 입니다.", "확인");
+        }
     }
 
     private void ListenForClients()

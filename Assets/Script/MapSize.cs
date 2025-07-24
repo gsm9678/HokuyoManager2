@@ -9,8 +9,13 @@ public class MapSize : MonoBehaviour
     [SerializeField] Slider Slider_Y_Size;
     [SerializeField] RectTransform Map;
 
+    private void Start()
+    {
+        Map.sizeDelta = new Vector2(Slider_X_Size.value, Slider_Y_Size.value);
+    }
+
     private void Update()
     {
-        Map.sizeDelta = new Vector2(Slider_X_Size.value ,Slider_Y_Size.value);
+        Map.sizeDelta = new Vector2(Slider_X_Size.value, Slider_Y_Size.value);
     }
 }

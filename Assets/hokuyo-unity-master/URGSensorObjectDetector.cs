@@ -323,7 +323,7 @@ namespace HKY
 
             urg = gameObject.AddComponent<UrgDeviceEthernet>();
             urg.StartTCP(ip_address, port_number);
-
+            
             StartMeasureDistance();
         }
 

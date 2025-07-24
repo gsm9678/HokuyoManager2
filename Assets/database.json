@@ -1,23 +1,32 @@
 {
-    "Zoom_InOut_Value": 8.714284896850586,
-    "X_Position_Value": 239.0,
-    "Y_Position_Value": -74.28572082519531,
-    "Rotate_Camera_Value": -3.5,
-    "X_Size_Value": 456.4286193847656,
-    "Y_Size_Value": 541.0714111328125,
+    "Zoom_InOut_Value": 5.049999713897705,
+    "X_Position_Value": -151.42857360839845,
+    "Y_Position_Value": 0.0,
+    "Rotate_Camera_Value": 0.0,
+    "X_Size_Value": 297.1427917480469,
+    "Y_Size_Value": 403.9285583496094,
     "Point_Scale_Value": 20.0,
-    "Max_Scale_Value": 67.47142028808594,
-    "Min_Scale_Value": 21.507143020629884,
-    "IP_Adress": "192.168.0.38",
+    "Max_Scale_Value": 58.9857063293457,
+    "Min_Scale_Value": 6.657137393951416,
+    "IP_Adress": "192.168.0.39",
     "OSC_IP_Adress": "127.0.0.1",
     "OSC_Adress": "Down",
     "BoxData": [
         {
             "Name": "Box0",
-            "X_Position_Value": 194.2857208251953,
+            "X_Position_Value": 0.0,
             "Y_Position_Value": 0.0,
-            "X_Size_Value": 82.29286193847656,
-            "Y_Size_Value": 56.621429443359378
+            "X_Size_Value": 1.0,
+            "Y_Size_Value": 1.0
+        }
+    ],
+    "hokuyoSetups": [
+        {
+            "Hokuyo_IP_Adress": "192.168.0.39",
+            "Zoom_IN_OUT": 4.985713958740234,
+            "X_Position": -154.2857208251953,
+            "Y_Position": -188.57142639160157,
+            "Rotate_Camera_Value": 90.0
         }
     ]
 }

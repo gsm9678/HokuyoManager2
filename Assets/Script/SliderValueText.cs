@@ -14,16 +14,12 @@ public class SliderValueText : MonoBehaviour
         text = this.transform.Find("SliderText (Legacy)").GetComponent<Text>();
         slider = this.transform.Find("Slider").GetComponent<Slider>();
 
-        StartCoroutine(SetValueText());
+        slider.onValueChanged.AddListener(delegate { SetValueText(); });
     }
 
-    IEnumerator SetValueText()
+    void SetValueText()
     {
-        while (true)
-        {
-            yield return new WaitUntil(() => text.text != (Mathf.Floor(slider.value * 100f) / 100f).ToString());
-            float v = Mathf.Floor(slider.value * 100f) / 100f;
-            text.text = v.ToString();
-        }
+        float v = Mathf.Floor(slider.value * 100f) / 100f;
+        text.text = v.ToString();
     }
 }
