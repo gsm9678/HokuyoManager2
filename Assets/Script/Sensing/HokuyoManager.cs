@@ -78,19 +78,12 @@ public class HokuyoManager : MonoBehaviour
 
                             if (Application.isFocused)
                             {
-                                if (HokuyoPointObjects.Count > j)
-                                {
-                                    HokuyoPointObjects[j].localPosition = vector;
-                                    if (!HokuyoPointObjects[j].gameObject.activeSelf)
-                                        HokuyoPointObjects[j].gameObject.SetActive(true);
-                                }
-                                else
-                                {
+                                if(HokuyoPointObjects.Count <= j)
                                     HokuyoPointObjects.Add(Instantiate(HokuyoPointPrefab.transform, HokuyoPointParent));
-                                    HokuyoPointObjects[j].localPosition = vector;
-                                    if (!HokuyoPointObjects[j].gameObject.activeSelf)
-                                        HokuyoPointObjects[j].gameObject.SetActive(true);
-                                }
+
+                                HokuyoPointObjects[j].localPosition = vector;
+                                if (!HokuyoPointObjects[j].gameObject.activeSelf)
+                                    HokuyoPointObjects[j].gameObject.SetActive(true);
                                 j++;
                             }
                             else

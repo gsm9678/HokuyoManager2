@@ -3,25 +3,68 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+#region RoomSettingData
 [Serializable] // 직렬화
 public class DataFormat
 {
-    public float Zoom_InOut_Value;
-    public float X_Position_Value;
-    public float Y_Position_Value;
-    public float Rotate_Camera_Value;
     public float X_Size_Value;
     public float Y_Size_Value;
     public float Point_Scale_Value;
     public float Max_Scale_Value;
     public float Min_Scale_Value;
-    public string IP_Adress;
     public string OSC_IP_Adress;
     public string OSC_Adress;
+    public bool X_Flip;
+    public bool Y_Flip;
+
+    public RoomSizeData RoomSizeData;
+    public ScaleData ScaleData;
+    public FlipData FlipData;
 
     public List<BoxData> BoxData = new List<BoxData>();
 
     public List<HokuyoSetup> hokuyoSetups = new List<HokuyoSetup>();
+}
+
+[Serializable]
+public class RoomSizeData //방 사이즈 데이터
+{
+    public float X_Size_Value;
+    public float Y_Size_Value;
+}
+
+[Serializable]
+public class ScaleData
+{
+    public float Point_Scale_Value;
+    public float Max_Scale_Value;
+    public float Min_Scale_Value;
+}
+
+[Serializable]
+public class FlipData
+{
+    public bool X_Flip;
+    public bool Y_Flip;
+}
+
+[Serializable]
+public class SensorSettingModel
+{
+    public string Hokuyo_IP_Adress { get; set; }
+    public float Zoom_IN_OUT { get; set; }
+    public float X_Position { get; set; }
+    public float Y_Position { get; set; }
+    public float Rotate_Camera_Value { get; set; }
+
+    public SensorSettingModel()
+    {
+        Hokuyo_IP_Adress = "192.168.0.10";
+        Zoom_IN_OUT = 1;
+        X_Position = 0;
+        Y_Position = 0;
+        Rotate_Camera_Value = 0;
+    }
 }
 
 [Serializable]
@@ -51,10 +94,19 @@ public class BoxData
     public float Y_Position_Value;
     public float X_Size_Value;
     public float Y_Size_Value;
+
+    public BoxData()
+    {
+        X_Position_Value = 0;
+        Y_Position_Value = 0;
+        X_Size_Value = 10;
+        Y_Size_Value = 10;
+    }
 }
+#endregion
 
 [Serializable]
-public class DetectedObjectData
+public struct DetectedObjectData
 {
     public float Right, Left, Top, Bottom;
 
@@ -77,7 +129,7 @@ public class DetectedObjectData
     {
         if (Right < vector3.x + Scale/ 2)
             Right = vector3.x + Scale / 2;
-        if (Left > vector3.x - Scale/ 2)
+        if (Left > vector3.x - Scale / 2)
             Left = vector3.x - Scale / 2;
         if (Top < vector3.y + Scale / 2)
             Top = vector3.y + Scale / 2;

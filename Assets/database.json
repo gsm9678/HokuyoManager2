@@ -11,15 +11,7 @@
     "IP_Adress": "192.168.0.39",
     "OSC_IP_Adress": "127.0.0.1",
     "OSC_Adress": "Down",
-    "BoxData": [
-        {
-            "Name": "Box0",
-            "X_Position_Value": 0.0,
-            "Y_Position_Value": 0.0,
-            "X_Size_Value": 1.0,
-            "Y_Size_Value": 1.0
-        }
-    ],
+    "BoxData": [],
     "hokuyoSetups": [
         {
             "Hokuyo_IP_Adress": "192.168.0.39",
