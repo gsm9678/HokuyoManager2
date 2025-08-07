@@ -4,13 +4,66 @@ using UnityEngine;
 
 public class OSCManager : MonoBehaviour
 {
+    public static OSCManager instance;
+
+    private OSCSettingModel _OSCSettingModel;
+
     public OSC _isOSC;
 
     string _name;
 
-    public void setName(string s)
+    private void Start()
     {
-        _name = "/" + s;
+        if (instance == null)
+            instance = this;
+
+        _OSCSettingModel = GameManager.instance.data.OSCSetting;
+
+        GameManager.instance.OSCManageAction += PropertyChanged;
+
+        AwakeOSC();
+    }
+
+    void PropertyChanged(string name)
+    {
+        switch (name)
+        {
+            case "OSC_Message_Address":
+                setName();
+                break;
+            case "Connect_OSC":
+                OSCConnect();
+                break;
+            case "Disconnect_OSC":
+                OSCDiconnect();
+                break;
+        }
+    }
+
+    void AwakeOSC()
+    {
+        _name = "/" + _OSCSettingModel.OSC_Message_Address;
+        _isOSC.outIP = _OSCSettingModel.OSC_IP_Address;
+        _isOSC.outPort = _OSCSettingModel.OSC_Port;
+        _isOSC.gameObject.SetActive(true);
+    }
+
+    public void setName()
+    {
+        _name = "/" + _OSCSettingModel.OSC_Message_Address;
+    }
+
+    public void OSCConnect()
+    {
+        _isOSC.outIP = _OSCSettingModel.OSC_IP_Address;
+        _isOSC.outPort = _OSCSettingModel.OSC_Port;
+        _isOSC.Open();
+    }
+
+    public void OSCDiconnect()
+    {
+        QuitMessage();
+        _isOSC.Close();
     }
 
     public void StartMessage(Vector2 vector2)
@@ -27,7 +80,7 @@ public class OSCManager : MonoBehaviour
         _isOSC.Send(message);
     }
 
-    public void SensorMessage(Vector3 vector3)
+    public void SensorMessage(Vector3 vector2)
     {
         if (!_isOSC.isRunning())
         {
@@ -35,13 +88,13 @@ public class OSCManager : MonoBehaviour
         }
         OscMessage message = new OscMessage();
         message.address = _name + "/Data";
-        message.values.Add(vector3.x);
-        message.values.Add(vector3.y);
+        message.values.Add(vector2.x);
+        message.values.Add(vector2.y);
         message.values.Add("");
         _isOSC.Send(message);
     }
 
-    public void StopMessage()
+    public void EndMessage()
     {
         if (!_isOSC.isRunning())
         {
@@ -54,8 +107,7 @@ public class OSCManager : MonoBehaviour
         _isOSC.Send(message);
     }
 
-
-    public void OnApplicationQuit()
+    public void QuitMessage()
     {
         if (!_isOSC.isRunning())
         {
@@ -66,5 +118,10 @@ public class OSCManager : MonoBehaviour
         message.values.Add(1);
         message.values.Add("");
         _isOSC.Send(message);
+    }
+
+    public void OnApplicationQuit()
+    {
+        QuitMessage();
     }
 }

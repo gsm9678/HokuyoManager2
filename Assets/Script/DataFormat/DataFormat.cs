@@ -1,84 +1,84 @@
 using JetBrains.Annotations;
+using OpenCover.Framework.Model;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+public class DBSCANPoint
+{
+    public Vector2 Position;
+    public int ClusterId = -1;
+    public bool Visited = false;
+}
+
+[Serializable]
+public class DBSCAN_Output
+{
+    public List<DBSCANPoint> points = new List<DBSCANPoint>();
+    public List<Vector2> Centroids = new List<Vector2>();
+}
 
 #region RoomSettingData
 [Serializable] // 직렬화
 public class DataFormat
 {
-    public float X_Size_Value;
-    public float Y_Size_Value;
-    public float Point_Scale_Value;
-    public float Max_Scale_Value;
-    public float Min_Scale_Value;
-    public string OSC_IP_Adress;
-    public string OSC_Adress;
-    public bool X_Flip;
-    public bool Y_Flip;
+    public RoomSizeDataModel RoomSizeData;
+    public ScaleSizeDataModel ScaleSizeData;
+    public FlipDataModel FlipData;
+    public OSCSettingModel OSCSetting;
 
-    public RoomSizeData RoomSizeData;
-    public ScaleData ScaleData;
-    public FlipData FlipData;
-
-    public List<BoxData> BoxData = new List<BoxData>();
-
-    public List<HokuyoSetup> hokuyoSetups = new List<HokuyoSetup>();
+    public List<SensorSettingModel> SensorSettingModels = new List<SensorSettingModel>();
+    public List<NeglectAreaModel> NeglectAreas = new List<NeglectAreaModel>();
 }
 
 [Serializable]
-public class RoomSizeData //방 사이즈 데이터
+public class RoomSizeDataModel //방 사이즈 데이터
 {
     public float X_Size_Value;
     public float Y_Size_Value;
 }
 
 [Serializable]
-public class ScaleData
+public class ScaleSizeDataModel
 {
-    public float Point_Scale_Value;
-    public float Max_Scale_Value;
-    public float Min_Scale_Value;
+    public float Epsilon;
+    public float Min_Point;
 }
 
 [Serializable]
-public class FlipData
+public class FlipDataModel
 {
     public bool X_Flip;
     public bool Y_Flip;
+}
+
+[Serializable]
+public class OSCSettingModel
+{
+    public string OSC_IP_Address;
+    public int OSC_Port;
+    public string OSC_Message_Address;
+
+    public OSCSettingModel()
+    {
+        OSC_IP_Address = "127.0.0.1";
+        OSC_Port = 7000;
+        OSC_Message_Address = "Sensor";
+    }
 }
 
 [Serializable]
 public class SensorSettingModel
 {
-    public string Hokuyo_IP_Adress { get; set; }
-    public float Zoom_IN_OUT { get; set; }
-    public float X_Position { get; set; }
-    public float Y_Position { get; set; }
-    public float Rotate_Camera_Value { get; set; }
-
-    public SensorSettingModel()
-    {
-        Hokuyo_IP_Adress = "192.168.0.10";
-        Zoom_IN_OUT = 1;
-        X_Position = 0;
-        Y_Position = 0;
-        Rotate_Camera_Value = 0;
-    }
-}
-
-[Serializable]
-public class HokuyoSetup
-{
-    public string Hokuyo_IP_Adress;
+    public string Hokuyo_IP_Address;
     public float Zoom_IN_OUT;
     public float X_Position;
     public float Y_Position;
     public float Rotate_Camera_Value;
 
-    public HokuyoSetup()
+    public SensorSettingModel()
     {
-        Hokuyo_IP_Adress = "192.168.0.10";
+        Hokuyo_IP_Address = "192.168.0.10";
         Zoom_IN_OUT = 1;
         X_Position = 0;
         Y_Position = 0;
@@ -87,15 +87,14 @@ public class HokuyoSetup
 }
 
 [Serializable]
-public class BoxData
+public class NeglectAreaModel
 {
-    public string Name;
     public float X_Position_Value;
     public float Y_Position_Value;
     public float X_Size_Value;
     public float Y_Size_Value;
 
-    public BoxData()
+    public NeglectAreaModel()
     {
         X_Position_Value = 0;
         Y_Position_Value = 0;
@@ -104,53 +103,3 @@ public class BoxData
     }
 }
 #endregion
-
-[Serializable]
-public struct DetectedObjectData
-{
-    public float Right, Left, Top, Bottom;
-
-    public DetectedObjectData(Vector3 vector3, float Scale)
-    {
-        Right = Left = vector3.x;
-        Top = Bottom = vector3.y;
-
-        if (Right < vector3.x + Scale / 2)
-            Right = vector3.x + Scale / 2;
-        if (Left > vector3.x - Scale / 2)
-            Left = vector3.x - Scale / 2;
-        if (Top < vector3.y + Scale / 2)
-            Top = vector3.y + Scale / 2;
-        if (Bottom > vector3.y - Scale / 2)
-            Bottom = vector3.y - Scale / 2;
-    }
-
-    public void setData(Vector3 vector3, float Scale)
-    {
-        if (Right < vector3.x + Scale/ 2)
-            Right = vector3.x + Scale / 2;
-        if (Left > vector3.x - Scale / 2)
-            Left = vector3.x - Scale / 2;
-        if (Top < vector3.y + Scale / 2)
-            Top = vector3.y + Scale / 2;
-        if (Bottom > vector3.y - Scale / 2)
-            Bottom = vector3.y - Scale / 2;
-    }
-
-    public Vector3 getCenter()
-    {
-        return new Vector3((Right + Left) / 2, (Top + Bottom) / 2, 0);
-    }
-
-    public Vector3 getSize()
-    {
-        return new Vector3(Mathf.Abs(Right) - Mathf.Abs(Left), Mathf.Abs(Top) - Mathf.Abs(Bottom), 0);
-    }
-}
-
-public class PointTrackingData
-{
-    public Vector3 position;
-    public float PauseTime;
-    public bool state = false;
-}

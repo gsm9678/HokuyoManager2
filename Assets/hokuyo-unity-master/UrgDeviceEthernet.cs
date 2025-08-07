@@ -70,11 +70,6 @@ public class UrgDeviceEthernet : UrgDevice
         }
     }
 
-    void OnDisable()
-    {
-        DeInit();
-    }
-
     void OnApplicationQuit()
     {
         DeInit();
@@ -110,6 +105,18 @@ public class UrgDeviceEthernet : UrgDevice
         {
             this.clientThread.Abort();
         }
+    }
+
+    public bool isConnected()
+    {
+        if (tcpClient != null)
+        {
+            if (tcpClient.Connected)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void Write(string scip)

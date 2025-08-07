@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using UnityEngine;
 
 namespace HKY
@@ -336,6 +337,15 @@ namespace HKY
         {
             urg.ResartTCP(ip_address, port_number);
             StartMeasureDistance();
+        }
+
+        public bool isConnected()
+        {
+            try
+            {
+                return urg.isConnected();
+            }
+            catch { return false; }
         }
 
         public void setIPAdress(string s)
