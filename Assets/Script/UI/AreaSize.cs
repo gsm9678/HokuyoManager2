@@ -10,6 +10,7 @@ public class AreaSize : MonoBehaviour
     {
         _roomSizeDataModel = GameManager.instance.data.RoomSizeData;
         GameManager.instance.AreaSizeAction += MapUpdate;
+        MapUpdate();
     }
 
     private void MapUpdate()
