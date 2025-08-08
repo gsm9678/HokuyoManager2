@@ -4,11 +4,24 @@ using UnityEngine;
 public class DataManager : MonoBehaviour
 {
     DataFormat data = new DataFormat();
-    [SerializeField] OSCManager m_OSCManager;
+
+    private static DataManager instance;
 
     string path;
 
-    public bool isStarted = false;
+    private void Awake()
+    {
+        if (null == instance)
+        {
+            instance = this;
+
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -32,7 +45,6 @@ public class DataManager : MonoBehaviour
                 GameManager.instance.data = data;
             }
         }
-        isStarted = true;
     }
 
     public void JsonSave()
