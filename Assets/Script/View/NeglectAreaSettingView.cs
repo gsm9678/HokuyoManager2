@@ -44,7 +44,7 @@ class NeglectAreaSettingView : View
             Dropdown.OptionData option = new Dropdown.OptionData();
             option.text = "Neglect Area" + i;
             dropdown.options.Add(option); ;
-            dropdown.value = i;
+            dropdown.value++;
         }
 
         Select_Area(dropdown);

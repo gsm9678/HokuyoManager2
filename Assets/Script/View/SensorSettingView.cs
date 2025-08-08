@@ -50,7 +50,7 @@ class SensorSettingView : View
             Dropdown.OptionData option = new Dropdown.OptionData();
             option.text = "Hokuyo" + i;
             dropdown.options.Add(option); ;
-            dropdown.value = i;
+            dropdown.value++;
         }
 
         Select_Hokuyo(dropdown);

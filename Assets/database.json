@@ -25,5 +25,18 @@
             "Rotate_Camera_Value": 0.0
         }
     ],
-    "NeglectAreas": []
+    "NeglectAreas": [
+        {
+            "X_Position_Value": 0.0,
+            "Y_Position_Value": 0.0,
+            "X_Size_Value": 10.0,
+            "Y_Size_Value": 10.0
+        },
+        {
+            "X_Position_Value": 0.0,
+            "Y_Position_Value": 0.0,
+            "X_Size_Value": 509.0576477050781,
+            "Y_Size_Value": 10.0
+        }
+    ]
 }

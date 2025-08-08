@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 
 public class NeglectAreaSettingViewModel : INotifyPropertyChanged
 {
