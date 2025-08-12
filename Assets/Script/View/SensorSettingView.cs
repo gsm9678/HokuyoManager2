@@ -17,6 +17,8 @@ class SensorSettingView : View
     [SerializeField] Slider sl_XPosition;
     [SerializeField] Slider sl_YPosition;
     [SerializeField] Slider sl_RotateSensor;
+    [SerializeField] Toggle tg_XFlip;
+    [SerializeField] Toggle tg_YFlip;
 
     SensorSettingViewModel _sensorSettingViewModel;
 
@@ -40,6 +42,8 @@ class SensorSettingView : View
         sl_XPosition.onValueChanged.AddListener(delegate { _sensorSettingViewModel.X_Position = sl_XPosition.value; UpdateDisplay(); });
         sl_YPosition.onValueChanged.AddListener(delegate { _sensorSettingViewModel.Y_Position = sl_YPosition.value; UpdateDisplay(); });
         sl_RotateSensor.onValueChanged.AddListener(delegate { _sensorSettingViewModel.Rotate_Camera_Value = sl_RotateSensor.value; UpdateDisplay(); });
+        tg_XFlip.onValueChanged.AddListener(delegate { _sensorSettingViewModel.X_Flip = tg_XFlip.isOn; UpdateDisplay(); });
+        tg_YFlip.onValueChanged.AddListener(delegate { _sensorSettingViewModel.Y_Flip = tg_YFlip.isOn; UpdateDisplay(); });
     }
 
     void init_Hokuyo(Dropdown dropdown)
@@ -81,6 +85,8 @@ class SensorSettingView : View
 
     void Remove_Hokuyo(Dropdown select)
     {
+        _sensorSettingViewModel.Disconnect_Sensor();
+
         if (select.options.Count != 0)
         {
             _sensorSettingViewModel.Remove_SensorSettingModel();
@@ -109,5 +115,7 @@ class SensorSettingView : View
         sl_XPosition.value = _sensorSettingViewModel.X_Position;
         sl_YPosition.value = _sensorSettingViewModel.Y_Position;
         sl_RotateSensor.value = _sensorSettingViewModel.Rotate_Camera_Value;
+        tg_XFlip.isOn = _sensorSettingViewModel.X_Flip;
+        tg_YFlip.isOn = _sensorSettingViewModel.Y_Flip;
     }
 }

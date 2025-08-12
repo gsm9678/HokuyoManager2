@@ -1,15 +1,11 @@
 {
     "RoomSizeData": {
         "X_Size_Value": 800.0,
-        "Y_Size_Value": 508.0450439453125
+        "Y_Size_Value": 800.0
     },
     "ScaleSizeData": {
         "Epsilon": 30.0,
-        "Min_Point": 7.0
-    },
-    "FlipData": {
-        "X_Flip": false,
-        "Y_Flip": false
+        "Min_Point": 2.0
     },
     "OSCSetting": {
         "OSC_IP_Address": "127.0.0.1",
@@ -19,24 +15,26 @@
     "SensorSettingModels": [
         {
             "Hokuyo_IP_Address": "192.168.0.40",
-            "Zoom_IN_OUT": 9.478631019592286,
-            "X_Position": -106.77244567871094,
-            "Y_Position": 333.6634521484375,
-            "Rotate_Camera_Value": 0.0
+            "Zoom_IN_OUT": 10.707895278930664,
+            "X_Position": -33.44342803955078,
+            "Y_Position": 345.5822448730469,
+            "Rotate_Camera_Value": 0.0,
+            "X_Flip": false,
+            "Y_Flip": false
         }
     ],
     "NeglectAreas": [
         {
-            "X_Position_Value": 0.0,
-            "Y_Position_Value": 0.0,
-            "X_Size_Value": 10.0,
-            "Y_Size_Value": 10.0
+            "X_Position_Value": 256.3999328613281,
+            "Y_Position_Value": 289.8423767089844,
+            "X_Size_Value": 151.02955627441407,
+            "Y_Size_Value": 61.957862854003909
         },
         {
-            "X_Position_Value": 0.0,
-            "Y_Position_Value": 0.0,
-            "X_Size_Value": 509.0576477050781,
-            "Y_Size_Value": 10.0
+            "X_Position_Value": 245.25146484375,
+            "Y_Position_Value": -312.1383056640625,
+            "X_Size_Value": 165.87425231933595,
+            "Y_Size_Value": 61.957862854003909
         }
     ]
 }

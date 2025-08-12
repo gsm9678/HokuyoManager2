@@ -8,7 +8,6 @@ public class SensorPointUpdater : MonoBehaviour
     ClusterManager clusterManager;
 
     RoomSizeDataModel roomSizeDataModel;
-    FlipDataModel flipDataModel;
     List<SensorSettingModel> sensorSettingModels;
     List<NeglectAreaModel> neglectAreaModels;
 
@@ -23,7 +22,6 @@ public class SensorPointUpdater : MonoBehaviour
 
         sensorSettingModels = GameManager.instance.data.SensorSettingModels;
         roomSizeDataModel = GameManager.instance.data.RoomSizeData;
-        flipDataModel = GameManager.instance.data.FlipData;
         neglectAreaModels = GameManager.instance.data.NeglectAreas;
     }
 
@@ -45,9 +43,9 @@ public class SensorPointUpdater : MonoBehaviour
                         continue;
                     }
 
-                    if (flipDataModel.X_Flip)
+                    if (sensorSettingModels[i].X_Flip)
                         vector *= new Vector2(-1, 1);
-                    if (flipDataModel.Y_Flip)
+                    if (sensorSettingModels[i].Y_Flip)
                         vector *= new Vector2(1, -1);
 
                     Vector2 VectorZero = new Vector2(sensorSettingModels[i].X_Position, sensorSettingModels[i].Y_Position);

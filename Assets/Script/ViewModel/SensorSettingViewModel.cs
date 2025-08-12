@@ -120,6 +120,44 @@ public class SensorSettingViewModel : INotifyPropertyChanged
             }
         }
     }
+
+    public bool X_Flip
+    {
+        get
+        {
+            if (_sensorSettingModels.Count != 0)
+                return _sensorSettingModels[ModelListNum].X_Flip;
+            else return false;
+        }
+        set
+        {
+            if( _sensorSettingModels.Count != 0)
+                if (_sensorSettingModels[ModelListNum].X_Flip != value)
+                {
+                    _sensorSettingModels[ModelListNum].X_Flip = value;
+                    OnPropertyChanged("X_Flip");
+                }
+        }
+    }
+
+    public bool Y_Flip
+    {
+        get
+        {
+            if (_sensorSettingModels.Count != 0)
+                return _sensorSettingModels[ModelListNum].Y_Flip;
+            else return false;
+        }
+        set
+        {
+            if (_sensorSettingModels.Count != 0)
+                if (_sensorSettingModels[ModelListNum].Y_Flip != value)
+                {
+                    _sensorSettingModels[ModelListNum].Y_Flip = value;
+                    OnPropertyChanged("Y_Flip");
+                }
+        }
+    }
     #endregion
 
     #region ListManage

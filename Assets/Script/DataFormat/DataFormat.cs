@@ -22,7 +22,6 @@ public class DataFormat
 {
     public RoomSizeDataModel RoomSizeData;
     public ScaleSizeDataModel ScaleSizeData;
-    public FlipDataModel FlipData;
     public OSCSettingModel OSCSetting;
 
     public List<SensorSettingModel> SensorSettingModels = new List<SensorSettingModel>();
@@ -73,6 +72,8 @@ public class SensorSettingModel
     public float X_Position;
     public float Y_Position;
     public float Rotate_Camera_Value;
+    public bool X_Flip;
+    public bool Y_Flip;
 
     public SensorSettingModel()
     {
