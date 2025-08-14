@@ -71,7 +71,6 @@ public class SensorManager : MonoBehaviour
         try
         {
             SensorDatas[i].DisableTCP();
-            SensorDatas[i].gameObject.SetActive(false);
         }
         catch { }
     }
