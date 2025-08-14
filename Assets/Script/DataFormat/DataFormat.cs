@@ -43,13 +43,6 @@ public class ScaleSizeDataModel
 }
 
 [Serializable]
-public class FlipDataModel
-{
-    public bool X_Flip;
-    public bool Y_Flip;
-}
-
-[Serializable]
 public class OSCSettingModel
 {
     public string OSC_IP_Address;
