@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 176722905440947631}
   - component: {fileID: 7651791166761304351}
-  - component: {fileID: 7668707524370253515}
   m_Layer: 0
   m_Name: HokuyoManager
   m_TagString: Untagged
@@ -48,8 +47,8 @@ MonoBehaviour:
   ip_address: 192.168.0.39
   port_number: 10940
   distanceCroppingMethod: 0
-  detectRectWidth: 15000
-  detectRectHeight: 15000
+  detectRectWidth: 30000
+  detectRectHeight: 30000
   maxDetectionDist: 100
   smoothDistanceCurve: 0
   smoothDistanceByTime: 0
@@ -76,46 +75,3 @@ MonoBehaviour:
   strengthColor: {r: 1, g: 0.0956518, b: 0, a: 0.4862745}
   objectColor: {r: 0, g: 1, b: 0, a: 1}
   processedObjectColor: {r: 0, g: 1, b: 1, a: 1}
---- !u!114 &7668707524370253515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7272067779546206263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e90c776cc8d7674386b0c103492297c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_senserData:
-  - {fileID: 7651791166761304351}
-  hokuyoSetup:
-  - Hokuyo_IP_Adress: 192.168.0.39
-    Zoom_IN_OUT: 1
-    X_Position: 0
-    Y_Position: 0
-    Rotate_Camera_Value: 0
-  - Hokuyo_IP_Adress: 192.168.0.39
-    Zoom_IN_OUT: 1
-    X_Position: 0
-    Y_Position: 0
-    Rotate_Camera_Value: 0
-  - Hokuyo_IP_Adress: 192.168.0.39
-    Zoom_IN_OUT: 1
-    X_Position: 0
-    Y_Position: 0
-    Rotate_Camera_Value: 0
-  - Hokuyo_IP_Adress: 192.168.0.39
-    Zoom_IN_OUT: 1
-    X_Position: 0
-    Y_Position: 0
-    Rotate_Camera_Value: 0
-  - Hokuyo_IP_Adress: 192.168.0.39
-    Zoom_IN_OUT: 1
-    X_Position: 0
-    Y_Position: 0
-    Rotate_Camera_Value: 0
-  Map: {fileID: 0}
-  PointPrefab: {fileID: 8078557171247863453, guid: 9519c8d87dc58964e855821dc2725d52, type: 3}
-  PointParent: {fileID: 0}
