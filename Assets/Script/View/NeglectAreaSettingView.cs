@@ -63,7 +63,7 @@ class NeglectAreaSettingView : View
     void Add_Area(Dropdown dropdown)
     {
         Dropdown.OptionData option = new Dropdown.OptionData();
-        option.text = "Area" + dropdown.options.Count.ToString();
+        option.text = "Neglect Area" + dropdown.options.Count.ToString();
         dropdown.options.Add(option);
         dropdown.value = dropdown.options.Count;
 
@@ -84,7 +84,7 @@ class NeglectAreaSettingView : View
                 dropdown.captionText.text = null;
             else
                 for (int i = 0; i < dropdown.options.Count; i++)
-                    dropdown.options[i].text = "Area" + i.ToString();
+                    dropdown.options[i].text = "Neglect Area" + i.ToString();
             Select_Area(dropdown);
         }
     }
