@@ -30,6 +30,8 @@ public class UrgDeviceEthernet : UrgDevice
     private string ip_address = "192.168.0.10";
     private int port_number = 10940;
 
+    public DateTime LastReceiveTime { get; private set; } = DateTime.MinValue;
+
     public void StartTCP(string ip = "192.168.0.10", int port = 10940)
     {
         //		messageQueue = Queue.Synchronized(new Queue());
@@ -57,6 +59,7 @@ public class UrgDeviceEthernet : UrgDevice
 
             //			this.listenThread = new Thread(new ThreadStart(ListenForClients));
             //			this.listenThread.Start();
+            LastReceiveTime = DateTime.UtcNow;
 
             ListenForClients();
         }
@@ -160,6 +163,8 @@ public class UrgDeviceEthernet : UrgDevice
                                 //measure distance only
                                 distances.Clear();
                                 SCIP_Reader.MD(receive_data, ref time_stamp, ref distances);
+
+                                LastReceiveTime = DateTime.UtcNow;
                             }
                             else if (cmd == GetCMDString(CMD.ME))
                             {
@@ -167,6 +172,8 @@ public class UrgDeviceEthernet : UrgDevice
                                 distances.Clear();
                                 strengths.Clear();
                                 SCIP_Reader.ME(receive_data, ref time_stamp, ref distances, ref strengths);
+
+                                LastReceiveTime = DateTime.UtcNow;
                             }
                             else
                             {

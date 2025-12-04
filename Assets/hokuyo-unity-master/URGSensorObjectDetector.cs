@@ -81,6 +81,12 @@ namespace HKY
         [SerializeField] Color objectColor = Color.green;
         [SerializeField] Color processedObjectColor = Color.cyan;
 
+        [SerializeField] float reconnectIntervalSeconds = 2f;     // 재시도 주기
+        [SerializeField] float dataTimeoutSeconds = 2f;           // 데이터 수신 타임아웃 기준
+
+        private float reconnectTimer = 0f;
+        private bool manuallyDisabled = false;
+
         //General
         List<long> croppedDistances;
         List<long> strengths;
@@ -324,17 +330,20 @@ namespace HKY
 
             urg = gameObject.AddComponent<UrgDeviceEthernet>();
             urg.StartTCP(ip_address, port_number);
-            
+
+            manuallyDisabled = false;
             StartMeasureDistance();
         }
 
         public void DisableTCP()
         {
+            manuallyDisabled = true;
             urg.DeInit();
         }
 
         public void EnableTCP()
         {
+            manuallyDisabled = false;
             urg.ResartTCP(ip_address, port_number);
             StartMeasureDistance();
         }
@@ -370,9 +379,47 @@ namespace HKY
             }
         }
 
+        private void CheckAndReconnectIfNeeded()
+        {
+            if (manuallyDisabled) return;              // 사용자가 DisableTCP로 끈 상태면 자동 재접속 X
+            if (urg == null) return;
+
+            bool noConnection = !isConnected();
+            bool dataTimeout = false;
+
+            // 데이터가 일정 시간 동안 안 들어왔는지 체크
+            if (urg.LastReceiveTime != DateTime.MinValue)
+            {
+                double elapsed = (DateTime.UtcNow - urg.LastReceiveTime).TotalSeconds;
+                if (elapsed > dataTimeoutSeconds)
+                {
+                    dataTimeout = true;
+                }
+            }
+
+            if (noConnection || dataTimeout)
+            {
+                Debug.LogWarning($"[URGSensorObjectDetector] URG 연결 끊김 감지. 재접속 시도... (noConnection={noConnection}, dataTimeout={dataTimeout})");
+
+                // 안전하게 한 번 끊고
+                //urg.DeInit();
+
+                // 다시 연결 시도
+                urg.ResartTCP(ip_address, port_number);
+                StartMeasureDistance();
+            }
+        }
+
 
         private void Update()
         {
+
+            reconnectTimer += Time.deltaTime;
+            if (reconnectTimer >= reconnectIntervalSeconds)
+            {
+                reconnectTimer = 0f;
+                CheckAndReconnectIfNeeded();
+            }
 
             if (smoothKernelSize % 2 == 0) { smoothKernelSize += 1; }
 
