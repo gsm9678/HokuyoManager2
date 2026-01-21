@@ -1,121 +1,123 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class OSCManager : MonoBehaviour
 {
     public static OSCManager instance;
 
-    private OSCSettingModel _OSCSettingModel;
+    private List<OSCSettingModel> _OSCSettings;
 
-    public OSC _isOSC;
+    [Header("OscOut ÇÁ¸®Æé")]
+    [SerializeField] private OscOut OSC_ChannelPrefab;
 
-    string _name;
+    private List<OscOut> OscOuts = new List<OscOut>();
+    private string OscAddress = string.Empty;
 
     private void Start()
     {
         if (instance == null)
             instance = this;
 
-        _OSCSettingModel = GameManager.instance.data.OSCSetting;
+        _OSCSettings = GameManager.instance.data.OSCSettings;
 
-        GameManager.instance.OSCManageAction += PropertyChanged;
-
-        AwakeOSC();
-    }
-
-    void PropertyChanged(string name)
-    {
-        switch (name)
+        foreach (var oscOutLine in _OSCSettings)
         {
-            case "OSC_Message_Address":
-                setName();
-                break;
-            case "Connect_OSC":
-                OSCConnect();
-                break;
-            case "Disconnect_OSC":
-                OSCDiconnect();
-                break;
+            OscOuts.Add(CreateOscOut(oscOutLine));
         }
+        setName();
     }
 
-    void AwakeOSC()
+    public OscOut CreateOscOut(OSCSettingModel oscLine)
     {
-        _name = "/" + _OSCSettingModel.OSC_Message_Address;
-        _isOSC.outIP = _OSCSettingModel.OSC_IP_Address;
-        _isOSC.outPort = _OSCSettingModel.OSC_Port;
-        _isOSC.gameObject.SetActive(true);
+        OscOut temp = Instantiate(OSC_ChannelPrefab, this.transform);
+        SetOSC(temp.GetComponent<OscOut>(), oscLine.OSC_Port, oscLine.OSC_IP_Address);
+        temp.Open(oscLine.OSC_Port, oscLine.OSC_IP_Address);
+
+        return temp;
+    }
+
+    private void SetOSC(OscOut osc, int outp, string ip = "127.0.0.1")
+    {
+        osc.port = outp;
+        osc.remoteIpAddress = ip;
+    }
+
+    public void SendOSC(string Message, int i)
+    {
+        foreach (OscOut oscOut in OscOuts)
+            oscOut.Send(Message, i);
     }
 
     public void setName()
     {
-        _name = "/" + _OSCSettingModel.OSC_Message_Address;
-    }
-
-    public void OSCConnect()
-    {
-        _isOSC.outIP = _OSCSettingModel.OSC_IP_Address;
-        _isOSC.outPort = _OSCSettingModel.OSC_Port;
-        _isOSC.Open();
-    }
-
-    public void OSCDiconnect()
-    {
-        QuitMessage();
-        _isOSC.Close();
+        OscAddress = "/" + GameManager.instance.data.OSC_Message_Address;
     }
 
     public void StartMessage(Vector2 vector2)
     {
-        if(!_isOSC.isRunning())
+        if (OscOuts.Count == 0)
         {
             return;
         }
         OscMessage message = new OscMessage();
-        message.address = _name + "/Start";
-        message.values.Add(vector2.x);
-        message.values.Add(vector2.y);
-        message.values.Add("");
-        _isOSC.Send(message);
+        message.address = OscAddress + "/Start";
+
+        message.Add(vector2.x);
+        message.Add(vector2.y);
+        message.Add("");
+        for (int i = 0; i < OscOuts.Count; i++) 
+        {
+            OscOuts[i].Send(message);
+        }
     }
 
     public void SensorMessage(Vector3 vector2)
     {
-        if (!_isOSC.isRunning())
+        if (OscOuts.Count == 0)
         {
             return;
         }
         OscMessage message = new OscMessage();
-        message.address = _name + "/Data";
-        message.values.Add(vector2.x);
-        message.values.Add(vector2.y);
-        message.values.Add("");
-        _isOSC.Send(message);
+        message.address = OscAddress + "/Data";
+        message.Add(vector2.x);
+        message.Add(vector2.y);
+        message.Add("");
+        for (int i = 0; i < OscOuts.Count; i++)
+        {
+            OscOuts[i].Send(message);
+        }
     }
 
     public void EndMessage()
     {
-        if (!_isOSC.isRunning())
+        if (OscOuts.Count == 0)
         {
             return;
         }
         OscMessage message = new OscMessage();
-        message.address = _name + "/End";
-        message.values.Add(1);
-        message.values.Add("");
-        _isOSC.Send(message);
+        message.address = OscAddress + "/End";
+        message.Add(1);
+        message.Add("");
+        for (int i = 0; i < OscOuts.Count; i++)
+        {
+            OscOuts[i].Send(message);
+        }
     }
 
     public void QuitMessage()
     {
-        if (!_isOSC.isRunning())
+        if (OscOuts.Count == 0)
         {
             return;
         }
         OscMessage message = new OscMessage();
-        message.address = _name + "/Quit";
-        message.values.Add(1);
-        message.values.Add("");
-        _isOSC.Send(message);
+        message.address = OscAddress + "/Quit";
+        message.Add(1);
+        message.Add("");
+        for (int i = 0; i < OscOuts.Count; i++)
+        {
+            OscOuts[i].Send(message);
+        }
     }
 
     public void OnApplicationQuit()

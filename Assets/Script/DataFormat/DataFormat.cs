@@ -22,10 +22,12 @@ public class DataFormat
 {
     public RoomSizeDataModel RoomSizeData;
     public ScaleSizeDataModel ScaleSizeData;
-    public OSCSettingModel OSCSetting;
 
+    public List<OSCSettingModel> OSCSettings = new List<OSCSettingModel>();
     public List<SensorSettingModel> SensorSettingModels = new List<SensorSettingModel>();
     public List<NeglectAreaModel> NeglectAreas = new List<NeglectAreaModel>();
+
+    public string OSC_Message_Address;
 }
 
 [Serializable]
@@ -47,13 +49,11 @@ public class OSCSettingModel
 {
     public string OSC_IP_Address;
     public int OSC_Port;
-    public string OSC_Message_Address;
 
     public OSCSettingModel()
     {
         OSC_IP_Address = "127.0.0.1";
         OSC_Port = 7000;
-        OSC_Message_Address = "Sensor";
     }
 }
 

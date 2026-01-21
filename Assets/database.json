@@ -1,24 +1,29 @@
 {
     "RoomSizeData": {
-        "X_Size_Value": 725.9993896484375,
-        "Y_Size_Value": 304.7644348144531
+        "X_Size_Value": 744.6341552734375,
+        "Y_Size_Value": 301.7088623046875
     },
     "ScaleSizeData": {
         "Epsilon": 30.0,
         "Min_Point": 2.0
     },
-    "OSCSetting": {
-        "OSC_IP_Address": "127.0.0.1",
-        "OSC_Port": 7000,
-        "OSC_Message_Address": "Down"
-    },
+    "OSCSettings": [
+        {
+            "OSC_IP_Address": "127.0.0.1",
+            "OSC_Port": 7000
+        },
+        {
+            "OSC_IP_Address": "192.168.0.111",
+            "OSC_Port": 7000
+        }
+    ],
     "SensorSettingModels": [
         {
             "Hokuyo_IP_Address": "192.168.0.40",
             "Zoom_IN_OUT": 11.60108757019043,
             "X_Position": -370.4312438964844,
-            "Y_Position": 146.09356689453126,
-            "Rotate_Camera_Value": 88.5,
+            "Y_Position": 139.8695526123047,
+            "Rotate_Camera_Value": 91.0,
             "X_Flip": false,
             "Y_Flip": true
         }
@@ -36,5 +41,6 @@
             "X_Size_Value": 63.4887580871582,
             "Y_Size_Value": 52.44967269897461
         }
-    ]
+    ],
+    "OSC_Message_Address": "Down"
 }

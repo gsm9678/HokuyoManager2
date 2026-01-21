@@ -1,52 +1,93 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 
 public class OSCSettingViewModel : INotifyPropertyChanged
 {
-    private OSCSettingModel _OSCSettingModel;
+    private List<OSCSettingModel> _OSCSettingModels;
 
     public OSCSettingViewModel()
     {
-        _OSCSettingModel = GameManager.instance.data.OSCSetting;
+        _OSCSettingModels = GameManager.instance.data.OSCSettings;
     }
 
     #region Property
+    public int ModelCount
+    {
+        get { return _OSCSettingModels.Count; }
+    }
+
     public string OSC_IP_Address
     {
-        get { return _OSCSettingModel.OSC_IP_Address; }
+        get
+        {
+            if (_OSCSettingModels.Count != 0)
+                return _OSCSettingModels[ModelListNum].OSC_IP_Address;
+            else return null;
+        }
         set
         {
-            if(_OSCSettingModel.OSC_IP_Address != value)
+            if (_OSCSettingModels.Count != 0)
             {
-                _OSCSettingModel.OSC_IP_Address = value;
-                OnPropertyChanged("OSC_IP_Adress");
+                if (_OSCSettingModels[ModelListNum].OSC_IP_Address != value)
+                {
+                    _OSCSettingModels[ModelListNum].OSC_IP_Address = value;
+                    OnPropertyChanged("OSC_IP_Adress");
+                }
             }
-        }
+        } 
     }
 
     public int OSC_IP_Port
     {
-        get { return _OSCSettingModel.OSC_Port; }
+        get
+        {
+            if (_OSCSettingModels.Count != 0)
+                return _OSCSettingModels[ModelListNum].OSC_Port;
+            else return 0;
+        }
         set
         {
-            if(_OSCSettingModel.OSC_Port != value)
+            if (_OSCSettingModels.Count != 0)
             {
-                _OSCSettingModel.OSC_Port = value;
-                OnPropertyChanged("OSC_Port");
+                if (_OSCSettingModels[ModelListNum].OSC_Port != value)
+                {
+                    _OSCSettingModels[ModelListNum].OSC_Port = value;
+                    OnPropertyChanged("OSC_Port");
+                }
             }
         }
     }
     
     public string OSC_Message_Address
     {
-        get { return _OSCSettingModel.OSC_Message_Address; }
+        get { return GameManager.instance.data.OSC_Message_Address; }
         set
         {
-            if (_OSCSettingModel.OSC_Message_Address != value)
+            if (GameManager.instance.data.OSC_Message_Address != value)
             {
-                _OSCSettingModel.OSC_Message_Address = value;
+                GameManager.instance.data.OSC_Message_Address = value;
                 OnPropertyChanged("OSC_Message_Address");
             }
         }
+    }
+    #endregion
+
+    #region ListManage
+    public int ModelListNum = 0;
+
+    public void Add_Model()
+    {
+        OSCSettingModel model = new OSCSettingModel();
+        _OSCSettingModels.Add(model);
+
+        OnPropertyChanged("NeglectAreaAdd");
+    }
+
+    public void Remove_Model()
+    {
+        _OSCSettingModels.RemoveAt(ModelListNum);
+
+        OnPropertyChanged("NeglectAreaRemove");
     }
     #endregion
 

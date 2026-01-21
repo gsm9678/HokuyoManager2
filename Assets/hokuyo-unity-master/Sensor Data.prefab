@@ -47,8 +47,8 @@ MonoBehaviour:
   ip_address: 192.168.0.39
   port_number: 10940
   distanceCroppingMethod: 0
-  detectRectWidth: 15000
-  detectRectHeight: 15000
+  detectRectWidth: 30000
+  detectRectHeight: 30000
   maxDetectionDist: 100
   smoothDistanceCurve: 0
   smoothDistanceByTime: 0
@@ -75,3 +75,5 @@ MonoBehaviour:
   strengthColor: {r: 1, g: 0.0956518, b: 0, a: 0.4862745}
   objectColor: {r: 0, g: 1, b: 0, a: 1}
   processedObjectColor: {r: 0, g: 1, b: 1, a: 1}
+  reconnectIntervalSeconds: 2
+  dataTimeoutSeconds: 2
