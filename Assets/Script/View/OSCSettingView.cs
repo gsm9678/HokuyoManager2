@@ -11,6 +11,8 @@ class OSCSettingView : View
     [SerializeField] InputField if_OscIpAddress;
     [SerializeField] InputField if_OscPort;
     [SerializeField] InputField if_OscMessageAddress;
+    [SerializeField] InputField if_MaxSendSignal;
+    [SerializeField] Slider sl_MaxSendSignal;
 
     OSCSettingViewModel _OSCSettingViewModel;
 
@@ -26,8 +28,10 @@ class OSCSettingView : View
         bt_Connect.onClick.AddListener(delegate { });
         bt_Disconnect.onClick.AddListener(delegate { });
         if_OscIpAddress.onEndEdit.AddListener(delegate { _OSCSettingViewModel.OSC_IP_Address = if_OscIpAddress.text; UpdateDisplay(); });
-        if_OscPort.onEndEdit.AddListener(delegate { _OSCSettingViewModel.OSC_IP_Port = InputFieldTxtOnChanged(if_OscPort.text); UpdateDisplay(); });
+        if_OscPort.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_OscPort.text,  out int v)) _OSCSettingViewModel.Max_SendSignal = v; UpdateDisplay(); });
         if_OscMessageAddress.onEndEdit.AddListener(delegate { _OSCSettingViewModel.OSC_Message_Address = if_OscMessageAddress.text; UpdateDisplay(); });
+        if_MaxSendSignal.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_MaxSendSignal.text, sl_MaxSendSignal, out int v)) _OSCSettingViewModel.Max_SendSignal = v; UpdateDisplay(); });
+        sl_MaxSendSignal.onValueChanged.AddListener(delegate { _OSCSettingViewModel.Max_SendSignal = (int)sl_MaxSendSignal.value; UpdateDisplay(); });
 
         UpdateDisplay();
     }
@@ -88,7 +92,8 @@ class OSCSettingView : View
     override protected void UpdateDisplay()
     {
         if_OscIpAddress.text = _OSCSettingViewModel.OSC_IP_Address;
-        if_OscPort.text = _OSCSettingViewModel.OSC_IP_Port.ToString();
+        if_OscPort.text = _OSCSettingViewModel.OSC_IP_Port.ToString("F2");
         if_OscMessageAddress.text = _OSCSettingViewModel.OSC_Message_Address;
+        if_MaxSendSignal.text = _OSCSettingViewModel.Max_SendSignal.ToString();
     }
 }

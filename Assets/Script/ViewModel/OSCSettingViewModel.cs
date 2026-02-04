@@ -70,6 +70,20 @@ public class OSCSettingViewModel : INotifyPropertyChanged
             }
         }
     }
+
+    public int Max_SendSignal
+    {
+        get { return GameManager.instance.data.Max_SendSignal; }
+        set
+        {
+            if (GameManager.instance.data.Max_SendSignal != value)
+            {
+                GameManager.instance.data.Max_SendSignal = value;
+                OnPropertyChanged("Max_SendSignal");
+            }
+        }
+    }
+
     #endregion
 
     #region ListManage

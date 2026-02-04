@@ -26,10 +26,10 @@ class NeglectAreaSettingView : View
         dr_Dropdown.onValueChanged.AddListener(delegate { Select_Area(dr_Dropdown); });
         bt_Create.onClick.AddListener(delegate { Add_Area(dr_Dropdown); });
         bt_Delete.onClick.AddListener(delegate { Remove_Area(dr_Dropdown); });
-        if_XPosition.onEndEdit.AddListener(delegate { _neglectAreaSettingViewModel.X_Position_Value = InputFieldTxtOnChanged(if_XPosition.text, sl_XPosition); UpdateDisplay(); });
-        if_YPosition.onEndEdit.AddListener(delegate { _neglectAreaSettingViewModel.Y_Position_Value = InputFieldTxtOnChanged(if_YPosition.text, sl_YPosition); UpdateDisplay(); });
-        if_XSize.onEndEdit.AddListener(delegate { _neglectAreaSettingViewModel.X_Size_Value = InputFieldTxtOnChanged(if_XSize.text, sl_XSize); UpdateDisplay(); });
-        if_YSize.onEndEdit.AddListener(delegate { _neglectAreaSettingViewModel.Y_Size_Value = InputFieldTxtOnChanged(if_YSize.text, sl_YSize); UpdateDisplay(); });
+        if_XPosition.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_XPosition.text, sl_XPosition, out float v)) _neglectAreaSettingViewModel.X_Position_Value = v; UpdateDisplay(); });
+        if_YPosition.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_YPosition.text, sl_YPosition, out float v)) _neglectAreaSettingViewModel.Y_Position_Value = v; UpdateDisplay(); });
+        if_XSize.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_XSize.text, sl_XSize, out float v)) _neglectAreaSettingViewModel.X_Size_Value = v; UpdateDisplay(); });
+        if_YSize.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_YSize.text, sl_YSize, out float v)) _neglectAreaSettingViewModel.Y_Size_Value = v; UpdateDisplay(); });
         sl_XPosition.onValueChanged.AddListener(delegate { _neglectAreaSettingViewModel.X_Position_Value = sl_XPosition.value; UpdateDisplay(); });
         sl_YPosition.onValueChanged.AddListener(delegate { _neglectAreaSettingViewModel.Y_Position_Value = sl_YPosition.value; UpdateDisplay(); });
         sl_XSize.onValueChanged.AddListener(delegate { _neglectAreaSettingViewModel.X_Size_Value = sl_XSize.value; UpdateDisplay(); });
@@ -91,10 +91,10 @@ class NeglectAreaSettingView : View
 
     protected override void UpdateDisplay()
     {
-        if_XPosition.text = _neglectAreaSettingViewModel.X_Position_Value.ToString();
-        if_YPosition.text = _neglectAreaSettingViewModel.Y_Position_Value.ToString();
-        if_XSize.text = _neglectAreaSettingViewModel.X_Size_Value.ToString();
-        if_YSize.text = _neglectAreaSettingViewModel.Y_Size_Value.ToString();
+        if_XPosition.text = _neglectAreaSettingViewModel.X_Position_Value.ToString("F2");
+        if_YPosition.text = _neglectAreaSettingViewModel.Y_Position_Value.ToString("F2");
+        if_XSize.text = _neglectAreaSettingViewModel.X_Size_Value.ToString("F2");
+        if_YSize.text = _neglectAreaSettingViewModel.Y_Size_Value.ToString("F2");
         sl_XPosition.value = _neglectAreaSettingViewModel.X_Position_Value;
         sl_YPosition.value = _neglectAreaSettingViewModel.Y_Position_Value;
         sl_XSize.value = _neglectAreaSettingViewModel.X_Size_Value;

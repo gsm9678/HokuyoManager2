@@ -34,10 +34,10 @@ class SensorSettingView : View
         bt_Disconnect.onClick.AddListener(delegate { _sensorSettingViewModel.Disconnect_Sensor(); });
         bt_Delete.onClick.AddListener(delegate { Remove_Hokuyo(dr_DropDown); });
         if_ipAddress.onEndEdit.AddListener(delegate { _sensorSettingViewModel.Hokuyo_IP_Address = if_ipAddress.text; UpdateDisplay(); });
-        if_ZoomINOUT.onEndEdit.AddListener(delegate { _sensorSettingViewModel.Zoom_IN_OUT = InputFieldTxtOnChanged(if_ZoomINOUT.text, sl_ZoomINOUT); UpdateDisplay(); });
-        if_XPosition.onEndEdit.AddListener(delegate { _sensorSettingViewModel.X_Position = InputFieldTxtOnChanged(if_XPosition.text, sl_XPosition); UpdateDisplay(); });
-        if_YPosition.onEndEdit.AddListener(delegate { _sensorSettingViewModel.Y_Position = InputFieldTxtOnChanged(if_YPosition.text, sl_YPosition); UpdateDisplay(); });
-        if_RotateSensor.onEndEdit.AddListener(delegate { _sensorSettingViewModel.Rotate_Camera_Value = InputFieldTxtOnChanged(if_RotateSensor.text, sl_RotateSensor); UpdateDisplay(); });
+        if_ZoomINOUT.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_ZoomINOUT.text, sl_ZoomINOUT, out float v)) _sensorSettingViewModel.Zoom_IN_OUT = v; UpdateDisplay(); });
+        if_XPosition.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_XPosition.text, sl_XPosition, out float v)) _sensorSettingViewModel.X_Position = v; UpdateDisplay(); });
+        if_YPosition.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_YPosition.text, sl_YPosition, out float v)) _sensorSettingViewModel.Y_Position = v; UpdateDisplay(); });
+        if_RotateSensor.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_RotateSensor.text, sl_RotateSensor, out float v)) _sensorSettingViewModel.Rotate_Camera_Value = v; UpdateDisplay(); });
         sl_ZoomINOUT.onValueChanged.AddListener(delegate { _sensorSettingViewModel.Zoom_IN_OUT = sl_ZoomINOUT.value; UpdateDisplay(); });
         sl_XPosition.onValueChanged.AddListener(delegate { _sensorSettingViewModel.X_Position = sl_XPosition.value; UpdateDisplay(); });
         sl_YPosition.onValueChanged.AddListener(delegate { _sensorSettingViewModel.Y_Position = sl_YPosition.value; UpdateDisplay(); });
@@ -107,10 +107,10 @@ class SensorSettingView : View
     override protected void UpdateDisplay()
     {
         if_ipAddress.text = _sensorSettingViewModel.Hokuyo_IP_Address;
-        if_ZoomINOUT.text = _sensorSettingViewModel.Zoom_IN_OUT.ToString();
-        if_XPosition.text = _sensorSettingViewModel.X_Position.ToString();
-        if_YPosition.text = _sensorSettingViewModel.Y_Position.ToString();
-        if_RotateSensor.text = _sensorSettingViewModel.Rotate_Camera_Value.ToString();
+        if_ZoomINOUT.text = _sensorSettingViewModel.Zoom_IN_OUT.ToString("F2");
+        if_XPosition.text = _sensorSettingViewModel.X_Position.ToString("F2");
+        if_YPosition.text = _sensorSettingViewModel.Y_Position.ToString("F2");
+        if_RotateSensor.text = _sensorSettingViewModel.Rotate_Camera_Value.ToString("F2");
         sl_ZoomINOUT.value = _sensorSettingViewModel.Zoom_IN_OUT;
         sl_XPosition.value = _sensorSettingViewModel.X_Position;
         sl_YPosition.value = _sensorSettingViewModel.Y_Position;

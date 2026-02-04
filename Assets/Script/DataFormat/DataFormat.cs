@@ -28,6 +28,7 @@ public class DataFormat
     public List<NeglectAreaModel> NeglectAreas = new List<NeglectAreaModel>();
 
     public string OSC_Message_Address;
+    public int Max_SendSignal;
 }
 
 [Serializable]

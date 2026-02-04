@@ -42,5 +42,6 @@
             "Y_Size_Value": 52.44967269897461
         }
     ],
-    "OSC_Message_Address": "Down"
+    "OSC_Message_Address": "Down",
+    "Max_SendSignal": 20
 }
