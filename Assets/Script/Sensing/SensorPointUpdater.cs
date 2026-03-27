@@ -27,6 +27,9 @@ public class SensorPointUpdater : MonoBehaviour
 
     private void Update()
     {
+        if(!LicenseManager.IsLicensed)
+            return;
+
         SensorPointVectors.Clear();
 
         for (int i = 0; i < m_senserData.Count; i++)

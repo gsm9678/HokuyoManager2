@@ -92,7 +92,7 @@ class OSCSettingView : View
     override protected void UpdateDisplay()
     {
         if_OscIpAddress.text = _OSCSettingViewModel.OSC_IP_Address;
-        if_OscPort.text = _OSCSettingViewModel.OSC_IP_Port.ToString("F2");
+        if_OscPort.text = _OSCSettingViewModel.OSC_IP_Port.ToString();
         if_OscMessageAddress.text = _OSCSettingViewModel.OSC_Message_Address;
         if_MaxSendSignal.text = _OSCSettingViewModel.Max_SendSignal.ToString();
     }
