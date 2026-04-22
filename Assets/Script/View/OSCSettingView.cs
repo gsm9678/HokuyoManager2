@@ -28,7 +28,7 @@ class OSCSettingView : View
         bt_Connect.onClick.AddListener(delegate { });
         bt_Disconnect.onClick.AddListener(delegate { });
         if_OscIpAddress.onEndEdit.AddListener(delegate { _OSCSettingViewModel.OSC_IP_Address = if_OscIpAddress.text; UpdateDisplay(); });
-        if_OscPort.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_OscPort.text,  out int v)) _OSCSettingViewModel.Max_SendSignal = v; UpdateDisplay(); });
+        if_OscPort.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_OscPort.text,  out int v)) _OSCSettingViewModel.OSC_IP_Port = v; UpdateDisplay(); });
         if_OscMessageAddress.onEndEdit.AddListener(delegate { _OSCSettingViewModel.OSC_Message_Address = if_OscMessageAddress.text; UpdateDisplay(); });
         if_MaxSendSignal.onEndEdit.AddListener(delegate { if (InputFieldTxtOnChanged(if_MaxSendSignal.text, sl_MaxSendSignal, out int v)) _OSCSettingViewModel.Max_SendSignal = v; UpdateDisplay(); });
         sl_MaxSendSignal.onValueChanged.AddListener(delegate { _OSCSettingViewModel.Max_SendSignal = (int)sl_MaxSendSignal.value; UpdateDisplay(); });
