@@ -19,7 +19,10 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
 
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(transform.root.gameObject);
+
+            if (DataManager.TryLoad(out DataFormat loadedData))
+                data = loadedData;
         }
         else
         {

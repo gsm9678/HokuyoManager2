@@ -7,7 +7,7 @@ public class OSCManager : MonoBehaviour
 
     private List<OSCSettingModel> _OSCSettings;
 
-    [Header("OscOut ÇÁ¸®Æé")]
+    [Header("OscOut í”„ë¦¬íŽ©")]
     [SerializeField] private OscOut OSC_ChannelPrefab;
 
     private List<OscOut> OscOuts = new List<OscOut>();
@@ -82,6 +82,27 @@ public class OSCManager : MonoBehaviour
         message.Add(vector2.x);
         message.Add(vector2.y);
         message.Add("");
+        for (int i = 0; i < OscOuts.Count; i++)
+        {
+            OscOuts[i].Send(message);
+        }
+    }
+
+    public void TrackedSensorMessage(TrackedObject trackedObject)
+    {
+        if (OscOuts.Count == 0)
+        {
+            return;
+        }
+
+        OscMessage message = new OscMessage();
+        message.address = OscAddress + "/Data";
+        message.Add(trackedObject.Id);
+        message.Add(trackedObject.Position.x);
+        message.Add(trackedObject.Position.y);
+        message.Add(trackedObject.State.ToString().ToLowerInvariant());
+        message.Add("");
+
         for (int i = 0; i < OscOuts.Count; i++)
         {
             OscOuts[i].Send(message);

@@ -11,7 +11,7 @@ public class DBSCAN
         _scaleSizeDataModel = GameManager.instance.data.ScaleSizeData;
     }
 
-    public int Run(List<DBSCANPoint> points, ref List<Vector2> Centroids)
+    public int Run(List<DBSCANPoint> points, ref List<Vector2> Centroids, ref List<DetectedCluster> clusters)
     {
         int clusterId = 0;
 
@@ -29,7 +29,10 @@ public class DBSCAN
             }
             else
             {
-                Centroids.Add(ExpandCluster(points, point, neighbors, clusterId));
+                ExpandCluster(points, point, neighbors, clusterId);
+                DetectedCluster cluster = CreateDetectedCluster(points, clusterId);
+                Centroids.Add(cluster.Center);
+                clusters.Add(cluster);
                 clusterId++;
             }
         }
@@ -37,7 +40,7 @@ public class DBSCAN
         return clusterId; // total cluster count
     }
 
-    private Vector2 ExpandCluster(List<DBSCANPoint> points, DBSCANPoint point, List<DBSCANPoint> neighbors, int clusterId)
+    private void ExpandCluster(List<DBSCANPoint> points, DBSCANPoint point, List<DBSCANPoint> neighbors, int clusterId)
     {
         point.ClusterId = clusterId;
 
@@ -60,15 +63,39 @@ public class DBSCAN
                 p.ClusterId = clusterId;
             }
         }
-
-        return ComputeCentroid(neighbors);
     }
 
-    Vector2 ComputeCentroid(List<DBSCANPoint> clusterPoints)
+    private DetectedCluster CreateDetectedCluster(List<DBSCANPoint> points, int clusterId)
+    {
+        List<Vector2> clusterPositions = points
+            .Where(point => point.ClusterId == clusterId)
+            .Select(point => point.Position)
+            .ToList();
+
+        Vector2 center = ComputeCentroid(clusterPositions);
+        float radius = 0f;
+
+        for (int i = 0; i < clusterPositions.Count; i++)
+        {
+            float distance = Vector2.Distance(center, clusterPositions[i]);
+            if (distance > radius)
+                radius = distance;
+        }
+
+        return new DetectedCluster
+        {
+            Center = center,
+            Points = clusterPositions,
+            Radius = radius,
+            PointCount = clusterPositions.Count
+        };
+    }
+
+    Vector2 ComputeCentroid(List<Vector2> clusterPoints)
     {
         Vector2 sum = Vector2.zero;
         foreach (var p in clusterPoints)
-            sum += p.Position;
+            sum += p;
         return sum / clusterPoints.Count;
     }
 

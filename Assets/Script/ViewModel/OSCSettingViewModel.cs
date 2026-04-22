@@ -84,6 +84,19 @@ public class OSCSettingViewModel : INotifyPropertyChanged
         }
     }
 
+    public bool UseObjectTracking
+    {
+        get { return GameManager.instance.data.UseObjectTracking; }
+        set
+        {
+            if (GameManager.instance.data.UseObjectTracking != value)
+            {
+                GameManager.instance.data.UseObjectTracking = value;
+                OnPropertyChanged("UseObjectTracking");
+            }
+        }
+    }
+
     #endregion
 
     #region ListManage

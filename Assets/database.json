@@ -1,7 +1,7 @@
 {
     "RoomSizeData": {
-        "X_Size_Value": 723.0,
-        "Y_Size_Value": 253.5335235595703
+        "X_Size_Value": 800.0,
+        "Y_Size_Value": 800.0
     },
     "ScaleSizeData": {
         "Epsilon": 30.0,
@@ -13,35 +13,23 @@
             "OSC_Port": 7000
         },
         {
-            "OSC_IP_Address": "192.168.0.111",
+            "OSC_IP_Address": "192.168.0.21",
             "OSC_Port": 7000
         }
     ],
     "SensorSettingModels": [
         {
             "Hokuyo_IP_Address": "192.168.0.40",
-            "Zoom_IN_OUT": 9.351456642150879,
-            "X_Position": -355.0,
-            "Y_Position": 111.0,
-            "Rotate_Camera_Value": 90.5,
+            "Zoom_IN_OUT": 8.785820007324219,
+            "X_Position": 26.28972625732422,
+            "Y_Position": 341.7616271972656,
+            "Rotate_Camera_Value": 0.0,
             "X_Flip": false,
             "Y_Flip": true
         }
     ],
-    "NeglectAreas": [
-        {
-            "X_Position_Value": -21.85860824584961,
-            "Y_Position_Value": 98.3642578125,
-            "X_Size_Value": 126.4342269897461,
-            "Y_Size_Value": 68.21676635742188
-        },
-        {
-            "X_Position_Value": 295.0917053222656,
-            "Y_Position_Value": -98.3642578125,
-            "X_Size_Value": 133.711669921875,
-            "Y_Size_Value": 60.93932342529297
-        }
-    ],
+    "NeglectAreas": [],
     "OSC_Message_Address": "Down",
-    "Max_SendSignal": 30
+    "Max_SendSignal": 30,
+    "UseObjectTracking": true
 }

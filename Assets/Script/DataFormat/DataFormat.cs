@@ -10,14 +10,46 @@ public class DBSCANPoint
 }
 
 [Serializable]
+public class DetectedCluster
+{
+    public Vector2 Center;
+    public List<Vector2> Points = new List<Vector2>();
+    public float Radius;
+    public int PointCount;
+}
+
+public enum TrackState
+{
+    Active,
+    Occluded,
+    Merged,
+    Lost
+}
+
+[Serializable]
+public class TrackedObject
+{
+    public int Id;
+    public Vector2 Position;
+    public Vector2 PredictedPosition;
+    public Vector2 Velocity;
+    public TrackState State;
+    public int MissingFrames;
+    public int MergedFrames;
+    public float LastSeenTime;
+}
+
+[Serializable]
 public class DBSCAN_Output
 {
     public List<DBSCANPoint> points = new List<DBSCANPoint>();
     public List<Vector2> Centroids = new List<Vector2>();
+    public List<DetectedCluster> Clusters = new List<DetectedCluster>();
+    public List<TrackedObject> TrackedObjects = new List<TrackedObject>();
 }
 
 #region RoomSettingData
-[Serializable] // ¡˜∑ƒ»≠
+[Serializable] // ÏßÅÎ†¨Ìôî
 public class DataFormat
 {
     public RoomSizeDataModel RoomSizeData;
@@ -29,10 +61,11 @@ public class DataFormat
 
     public string OSC_Message_Address;
     public int Max_SendSignal;
+    public bool UseObjectTracking;
 }
 
 [Serializable]
-public class RoomSizeDataModel //πÊ ªÁ¿Ã¡Ó µ•¿Ã≈Õ
+public class RoomSizeDataModel //Î∞© ÏÇ¨Ïù¥Ï¶à Îç∞Ïù¥ÌÑ∞
 {
     public float X_Size_Value;
     public float Y_Size_Value;

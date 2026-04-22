@@ -9,6 +9,24 @@ public class DataManager : MonoBehaviour
 
     string path;
 
+    public static string DatabasePath
+    {
+        get { return Path.Combine(Application.dataPath, "database.json"); }
+    }
+
+    public static bool TryLoad(out DataFormat loadedData)
+    {
+        loadedData = null;
+        string loadPath = DatabasePath;
+
+        if (!File.Exists(loadPath))
+            return false;
+
+        string loadJson = File.ReadAllText(loadPath);
+        loadedData = JsonUtility.FromJson<DataFormat>(loadJson);
+        return loadedData != null;
+    }
+
     private void Awake()
     {
         if (null == instance)
@@ -25,22 +43,22 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
-        path = Path.Combine(Application.dataPath, "database.json");
+        path = DatabasePath;
         JsonLoad();
     }
 
     public void JsonLoad()
     {
+        if (string.IsNullOrEmpty(path))
+            path = DatabasePath;
+
         if (!File.Exists(path))
         {
             JsonSave();
         }
         else
         {
-            string loadJson = File.ReadAllText(path);
-            data = JsonUtility.FromJson<DataFormat>(loadJson);
-
-            if (data != null)
+            if (TryLoad(out data))
             {
                 GameManager.instance.data = data;
             }

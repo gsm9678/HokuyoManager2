@@ -26,48 +26,48 @@ public class PointVisualization : MonoBehaviour
     {
         if (Application.isFocused)
         {
-            int i = 0;
+        int i = 0;
 
-            for (; i < DBSCAN_output.points.Count; i++)
-            {
-                if (PointObject.Count <= i)
-                    PointObject.Add(Instantiate(p_Point.transform, tr_PointParent));
+        for (; i < DBSCAN_output.points.Count; i++)
+        {
+            if (PointObject.Count <= i)
+                PointObject.Add(Instantiate(p_Point.transform, tr_PointParent));
 
-                PointObject[i].localPosition = DBSCAN_output.points[i].Position;
-                if (!PointObject[i].gameObject.activeSelf)
-                    PointObject[i].gameObject.SetActive(true);
+            PointObject[i].localPosition = DBSCAN_output.points[i].Position;
+            if (!PointObject[i].gameObject.activeSelf)
+                PointObject[i].gameObject.SetActive(true);
 
-                PointObject[i].GetComponent<RectTransform>().sizeDelta = new Vector2(_scaleSizeDataModel.Epsilon, _scaleSizeDataModel.Epsilon);
+            PointObject[i].GetComponent<RectTransform>().sizeDelta = new Vector2(_scaleSizeDataModel.Epsilon, _scaleSizeDataModel.Epsilon);
 
-                Color color = DBSCAN_output.points[i].ClusterId == -1 ? Color.gray : GetColor(DBSCAN_output.points[i].ClusterId);
-                PointObject[i].GetComponent<Image>().color = color;
-            }
-
-            for (; i < PointObject.Count; i++)
-            {
-                if (PointObject[i].gameObject.activeSelf)
-                    PointObject[i].gameObject.SetActive(false);
-                else
-                    break;
-            }
-
-            int j = 0;
-            for (; j < DBSCAN_output.Centroids.Count; j++)
-            {
-                if (DetectedObjectPoints.Count <= j)
-                    DetectedObjectPoints.Add(Instantiate(p_DetectedPoint.transform,  tr_DetectedPoint));
-
-                DetectedObjectPoints[j].gameObject.SetActive(true);
-                DetectedObjectPoints[j].localPosition = DBSCAN_output.Centroids[j];
-            }
-            for (; j < DetectedObjectPoints.Count; j++)
-            {
-                if (DetectedObjectPoints[j].gameObject.activeSelf)
-                    DetectedObjectPoints[j].gameObject.SetActive(false);
-                else
-                    break;
-            }
+            Color color = DBSCAN_output.points[i].ClusterId == -1 ? Color.gray : GetColor(DBSCAN_output.points[i].ClusterId);
+            PointObject[i].GetComponent<Image>().color = color;
         }
+
+        for (; i < PointObject.Count; i++)
+        {
+            if (PointObject[i].gameObject.activeSelf)
+                PointObject[i].gameObject.SetActive(false);
+            else
+                break;
+        }
+
+        int j = 0;
+        for (; j < DBSCAN_output.Centroids.Count; j++)
+        {
+            if (DetectedObjectPoints.Count <= j)
+                DetectedObjectPoints.Add(Instantiate(p_DetectedPoint.transform, tr_DetectedPoint));
+
+            DetectedObjectPoints[j].gameObject.SetActive(true);
+            DetectedObjectPoints[j].localPosition = DBSCAN_output.Centroids[j];
+        }
+        for (; j < DetectedObjectPoints.Count; j++)
+        {
+            if (DetectedObjectPoints[j].gameObject.activeSelf)
+                DetectedObjectPoints[j].gameObject.SetActive(false);
+            else
+                break;
+        }
+    }
         else
         {
             for (int i = 0; i < PointObject.Count; i++)

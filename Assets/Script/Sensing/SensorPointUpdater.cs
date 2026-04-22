@@ -13,12 +13,21 @@ public class SensorPointUpdater : MonoBehaviour
 
     public List<URGSensorObjectDetector> m_senserData;
     public List<Vector2> SensorPointVectors = new List<Vector2>();
+    bool licenseChecked;
 
     private void Start()
     {
         clusterManager= new ClusterManager();
+        RefreshDataReferences();
+    }
 
-        m_senserData = sensorManager.SensorDatas;
+    private void RefreshDataReferences()
+    {
+        if (sensorManager != null)
+            m_senserData = sensorManager.SensorDatas;
+
+        if (GameManager.instance == null || GameManager.instance.data == null)
+            return;
 
         sensorSettingModels = GameManager.instance.data.SensorSettingModels;
         roomSizeDataModel = GameManager.instance.data.RoomSizeData;
@@ -27,32 +36,62 @@ public class SensorPointUpdater : MonoBehaviour
 
     private void Update()
     {
-        if(!LicenseManager.IsLicensed)
+        if (clusterManager == null)
+            clusterManager = new ClusterManager();
+
+        if (!LicenseManager.IsLicensed)
+        {
+            if (!licenseChecked)
+            {
+                licenseChecked = true;
+                LicenseManager.LoadAndValidate();
+            }
+        }
+
+        if (!LicenseManager.IsLicensed)
+            return;
+
+        RefreshDataReferences();
+
+        if (m_senserData == null || sensorSettingModels == null || roomSizeDataModel == null || neglectAreaModels == null)
             return;
 
         SensorPointVectors.Clear();
 
         for (int i = 0; i < m_senserData.Count; i++)
         {
-            if (m_senserData[i].isConnected())
+            if (i >= sensorSettingModels.Count)
+                continue;
+
+            URGSensorObjectDetector sensor = m_senserData[i];
+            SensorSettingModel setting = sensorSettingModels[i];
+
+            if (sensor == null || sensor.DirectedDistances == null)
+                continue;
+
+            bool hasSensorData = sensor.DirectedDistances.Count > 0;
+            if (sensor.isConnected() || hasSensorData)
             {
-                foreach (var dis in m_senserData[i].DirectedDistances)
+                List<Vector3> directedDistances = new List<Vector3>(sensor.DirectedDistances);
+
+                for (int j = 0; j < directedDistances.Count; j++)
                 {
-                    Vector2 vector = new Vector3(scale(-m_senserData[i].detectRectWidth / 2, m_senserData[i].detectRectWidth / 2, (-m_senserData[i].detectRectWidth / 200) * sensorSettingModels[i].Zoom_IN_OUT, (m_senserData[i].detectRectWidth / 200) * sensorSettingModels[i].Zoom_IN_OUT, dis.x),
-                                                scale(0, m_senserData[i].detectRectHeight, 0 * sensorSettingModels[i].Zoom_IN_OUT, m_senserData[i].detectRectHeight / 100 * sensorSettingModels[i].Zoom_IN_OUT, dis.y),
+                    Vector3 dis = directedDistances[j];
+                    Vector2 vector = new Vector3(scale(-sensor.detectRectWidth / 2, sensor.detectRectWidth / 2, (-sensor.detectRectWidth / 200) * setting.Zoom_IN_OUT, (sensor.detectRectWidth / 200) * setting.Zoom_IN_OUT, dis.x),
+                                                scale(0, sensor.detectRectHeight, 0 * setting.Zoom_IN_OUT, sensor.detectRectHeight / 100 * setting.Zoom_IN_OUT, dis.y),
                                                 0);
                     if (vector.x == 0 && vector.y == 0)
                     {
                         continue;
                     }
 
-                    if (sensorSettingModels[i].X_Flip)
+                    if (setting.X_Flip)
                         vector *= new Vector2(-1, 1);
-                    if (sensorSettingModels[i].Y_Flip)
+                    if (setting.Y_Flip)
                         vector *= new Vector2(1, -1);
 
-                    Vector2 VectorZero = new Vector2(sensorSettingModels[i].X_Position, sensorSettingModels[i].Y_Position);
-                    RotateAround(sensorSettingModels[i].Rotate_Camera_Value, Vector2.Distance(Vector2.zero, vector), VectorZero, ref vector);
+                    Vector2 VectorZero = new Vector2(setting.X_Position, setting.Y_Position);
+                    RotateAround(setting.Rotate_Camera_Value, Vector2.Distance(Vector2.zero, vector), VectorZero, ref vector);
 
                     if (vector.x < roomSizeDataModel.X_Size_Value / 2 &&
                         vector.x > -roomSizeDataModel.X_Size_Value / 2 &&
